@@ -1,3 +1,23 @@
+const handsfree = new Handsfree({ hands: true })
+handsfree.start()
+
+handsfree.on('finger-pinched-held-0', () => {
+  player.x -= 10;
+})
+
+handsfree.on('finger-pinched-held-1', () => {
+  player.x += 10;
+})
+
+handsfree.on('finger-pinched-held-2', () => {
+  player.y -= 10;
+})
+
+handsfree.on('finger-pinched-held-3', () => {
+  player.y += 10;
+})
+
+handsfree.start()
 var ctx = document.getElementById("ctx").getContext("2d");
 
 ctx.font = "30px Arial";
@@ -147,6 +167,7 @@ updateEntity = function (entity) {
 };
 
 updatePlayerPosition = function () {
+
   if (player.pressingRight) {
     player.x += 10;
   }
@@ -234,7 +255,12 @@ update = function () {
     }
   }
   if (player.hp <= 0) {
-    startNewGame();
+    ctx.font = "250px Arial";
+    ctx.fillText("GG", 250, 250);
+    setTimeout(startNewGame, 1000);
+    ctx.font = "30px Arial";
+
+    // startNewGame();
   }
 
   updatePlayerPosition();
@@ -283,9 +309,7 @@ performSpecialAttack = function (actor) {
   }
   mouse.preventDefault();
 }
-document.oncontextmenu = function (mouse) {
-  perf
-};
+
 
 document.onkeydown = function (event) {
   if (event.key === "d") {
@@ -395,6 +419,6 @@ randomlyGenerateBullet = function (actor, overwriteAngle) {
   Bullet(id, x, y, spdX, spdY, width, height);
 };
 
-startNewGame();
+setTimeout(startNewGame, 2000);
 
 setInterval(update, 40);
